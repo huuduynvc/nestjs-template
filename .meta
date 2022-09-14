@@ -1,0 +1,5 @@
+{
+  "projects": {
+    "libs": "git@github.com:blox3/common-libs.git"
+  }
+}

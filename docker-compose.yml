@@ -1,0 +1,11 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres'
+    container_name: 'postgres_dev'
+    environment:
+      POSTGRES_DB: 'blox3'
+      POSTGRES_USER: 'blox3'
+      POSTGRES_PASSWORD: 'blox3'
+    ports:
+      - '5000:5432'
