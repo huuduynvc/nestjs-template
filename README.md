@@ -11,10 +11,21 @@ node = ^12
 
 1. PostgreSQL
 
+Install postgre in docker compose, using config database in env to connect after
+
 ```bash
+yarn postgre:init
+```
+
+Sync database: create table database from code
+
+```bash
+yarn dbm:init
 ```
 
 2. Redis
+
+Currently, not working
 
 ```bash
 $ docker run --name marketplace-api_redis -p 6379:6379 -d redis:6
@@ -29,7 +40,7 @@ $ cp .env.example .env
 ## Install dependencies
 
 ```bash
-$ yarn 
+$ yarn
 ```
 
 ## Install common libs
@@ -37,6 +48,12 @@ $ yarn
 ```bash
 $ npx meta git update
 $ npx meta git checkout develop --include-only libs
+```
+
+or
+
+```bash
+yarn libs:build
 ```
 
 ## Run migrations

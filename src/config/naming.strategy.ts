@@ -1,6 +1,11 @@
 import { DefaultNamingStrategy } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import * as pluralize from 'pluralize';
+import * as dotenv from 'dotenv';
+
+dotenv.config({
+  path: '.env',
+});
 
 const { TABLE_PREFIX } = process.env;
 export class NamingStrategy extends DefaultNamingStrategy {

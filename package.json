@@ -20,7 +20,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install",
-    "libs:build": "npx meta git update && npx meta git checkout develop --include-only libs && npx meta git pull --include-only libs"
+    "libs:build": "npx meta git update && npx meta git checkout develop --include-only libs && npx meta git pull --include-only libs",
+    "dbm:init": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:sync -d ormconfig.ts",
+    "postgre:init": "docker-compose up -d postgres"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -30,13 +32,17 @@
     "@nestjs/microservices": "^9.0.11",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.2",
+    "@nestjs/typeorm": "^9.0.1",
     "aws-sdk": "^2.1214.0",
+    "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "dayjs": "^1.11.5",
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "lint-staged": "^13.0.3",
     "nest-winston": "^1.7.0",
+    "pg": "^8.8.0",
     "pluralize": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
