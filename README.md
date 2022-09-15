@@ -47,7 +47,7 @@ $ yarn
 
 ```bash
 $ npx meta git update
-$ npx meta git checkout develop --include-only libs
+$ npx meta git checkout main --include-only libs
 ```
 
 or
