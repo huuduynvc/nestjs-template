@@ -20,13 +20,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install",
-    "postgre:init": "docker-compose up -d postgres",
-    "seed": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/dist/cli/index.js seed -d ormconfig",
-    "dbs:sync": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:sync -d ormconfig.ts",
-    "typeorm": "ts-node  -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration:generate": "npm run typeorm -- migration:generate src/database/migrations/Migration -d ormconfig.ts",
     "migration:run": "npm run typeorm -- migration:run -d ormconfig.ts",
-    "migration:revert": "npm run typeorm -- migration:revert -d ormconfig.ts"
+    "migration:revert": "npm run typeorm -- migration:revert -d ormconfig.ts",
+    "seed": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/dist/cli/index.js seed -d ormconfig",
+    "dbs:sync": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:sync -d ormconfig.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

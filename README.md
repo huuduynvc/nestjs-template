@@ -11,24 +11,14 @@ node = ^12
 
 1. PostgreSQL
 
-Install postgre in docker compose, using config database in env to connect after
-
 ```bash
-yarn postgre:init
-```
-
-Sync database: create table database from code
-
-```bash
-yarn dbm:init
+docker run --name box3_postgres -e POSTGRES_USER=blox3 -e POSTGRES_PASSWORD=blox3 -e POSTGRES_DB=blox3 -p 5432:5432 -d postgres
 ```
 
 2. Redis
 
-Currently, not working
-
 ```bash
-$ docker run --name marketplace-api_redis -p 6379:6379 -d redis:6
+$ docker run --name box3_redis -p 6379:6379 -d redis
 ```
 
 3. Environment
