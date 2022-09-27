@@ -1,13 +1,35 @@
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationError, ValidationPipe } from '@nestjs/common';
+import { ValidationError, ValidationPipe, VersioningType } from '@nestjs/common';
 import { BadRequestException } from '@blox3/infra-exception';
-import { AppModule } from './app.module';
-import { name as pkgName, description as pkgDesc, version as pkgVersion } from '../package.json';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import * as cookieParser from 'cookie-parser';
+import { MainModule } from './main.module';
+import { configSwagger } from './config/swagger.config';
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      PORT: string;
+      REDIS_PORT: string;
+      PACKAGE_NAME: string;
+      PACKAGE_VERSION: string;
+    }
+  }
+}
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(MainModule);
+
+  app.use(cookieParser());
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.enableCors();
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
+  // app.setGlobalPrefix(MainModule.apiPrefix);
+
+  configSwagger(app, MainModule.apiPrefix);
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -18,15 +40,8 @@ async function bootstrap(): Promise<void> {
       },
     }),
   );
-  const options = new DocumentBuilder()
-    .setTitle(pkgName)
-    .setDescription(pkgDesc)
-    .setVersion(pkgVersion)
-    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'access-token')
-    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'refresh-token')
-    .build();
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('docs', app, document);
-  await app.listen(3000);
+
+  await app.listen(parseInt(process.env.PORT, 10) || 3000);
 }
+
 bootstrap();

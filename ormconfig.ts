@@ -1,21 +1,26 @@
-import { NamingStrategy } from 'src/config/naming.strategy';
-import { join } from 'path';
-import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
+import { NamingStrategy } from '@blox3/infra-common';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { SeederOptions } from 'typeorm-extension';
 
 dotenv.config({
   path: '.env',
 });
 
-export const connectionSource = new DataSource({
+const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT, 10),
+  port: parseInt(process.env.DB_PORT!, 10),
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  entities: [join(__dirname, '../**/*.entity{.ts,.js}')],
+  entities: [`${__dirname}/**/*.entity{.ts,.js}`],
   namingStrategy: new NamingStrategy(),
   migrationsTableName: '__migrations',
-  migrations: ['./migrations/**/*.ts'],
-});
+  migrations: ['./src/database/migrations/**/*.ts'],
+  seeds: ['./src/database/seeds/*{.ts,.js}'],
+  synchronize: false,
+  migrationsRun: true,
+};
+
+export const connectionSource = new DataSource(options);

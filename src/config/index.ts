@@ -1,13 +1,16 @@
-import DatabaseConfig from './db.config';
-import LogConfig from './log.config';
-import TcpMicroserviceConfig from './tcp-microservice.config';
-import AppSettings from './app.config';
-import MarketplaceMicroService from './microservices/marketplace.config';
+import { registerAs } from '@nestjs/config';
+import database from './db.config';
+import jwt from './jwt.config';
+import appSetting from './app-settings.config';
+import cacheConfig from './cache.config';
+import logingConfig from './log.config';
 
-export default [
-  DatabaseConfig,
-  LogConfig,
-  TcpMicroserviceConfig,
-  AppSettings,
-  MarketplaceMicroService,
-];
+export default registerAs('config', () => {
+  return {
+    appSetting,
+    database,
+    jwt,
+    cacheConfig: cacheConfig(),
+    logingConfig,
+  };
+});
