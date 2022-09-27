@@ -1,0 +1,39 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+  pull_request:
+    branches:
+      - master
+      - dev
+      
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04]
+      fail-fast: true
+      max-parallel: 2
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Check commit message
+        uses: wagoid/commitlint-github-action@v5
+      - name: Check format 
+        run: npx prettier --check "{src,test}/**/*.ts"
+      - name: Lint
+        run: npx eslint "{src,test}/**/*.ts"

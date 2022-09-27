@@ -43,19 +43,6 @@ $ cp .env.example .env
 $ yarn
 ```
 
-## Install common libs
-
-```bash
-$ npx meta git update
-$ npx meta git checkout main --include-only libs
-```
-
-or
-
-```bash
-yarn libs:build
-```
-
 ## Run migrations
 
 ```bash
