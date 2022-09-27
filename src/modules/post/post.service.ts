@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Post } from 'src/domain/entities';
+import { Post } from 'src/entities';
 import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 
@@ -8,10 +8,10 @@ import { CreatePostDto } from './dto/create-post.dto';
 export class PostService {
   constructor(
     @InjectRepository(Post)
-    private userRepository: Repository<Post>,
+    private postRepository: Repository<Post>,
   ) {}
 
-  async create(createUserDto: CreatePostDto): Promise<void> {
-    console.log(createUserDto);
+  async create(post: CreatePostDto): Promise<Post> {
+    return this.postRepository.create(post);
   }
 }

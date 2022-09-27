@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Post as EPost } from 'src/entities';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostResponseDto } from './dto/post-response.dto';
 import { PostService } from './post.service';
@@ -15,7 +16,7 @@ export class PostController {
     type: PostResponseDto,
   })
   @Post('')
-  create(@Body() createUserDto: CreatePostDto) {
-    return this.postService.create(createUserDto);
+  create(@Body() body: CreatePostDto): Promise<EPost> {
+    return this.postService.create(body);
   }
 }

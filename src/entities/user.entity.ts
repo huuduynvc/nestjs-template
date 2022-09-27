@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
-import { EUserStatus } from 'src/shared/enum';
+import { UserStatus } from 'src/common/enums';
 import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Post } from './post.entity';
@@ -17,11 +17,11 @@ export class User extends BaseEntity {
   @Column({
     name: 'status',
     type: 'enum',
-    enum: EUserStatus,
-    default: EUserStatus.Inactive,
+    enum: UserStatus,
+    default: UserStatus.Inactive,
     nullable: false,
   })
-  status: EUserStatus;
+  status: UserStatus;
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];

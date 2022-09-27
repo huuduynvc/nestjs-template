@@ -1,6 +1,6 @@
 import { Seeder } from 'typeorm-extension';
 import { DataSource } from 'typeorm';
-import { User } from 'src/domain/entities';
+import { User } from 'src/entities';
 
 export default class CreateData implements Seeder {
   public async run(appDataSource: DataSource): Promise<any> {

@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BadRequestException } from '@blox3/infra-exception';
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/domain/entities';
+import { User } from 'src/entities';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });
@@ -24,9 +24,5 @@ export class UserService {
     const createdUser = await this.userRepository.create(createUserDto);
     const saveUser = await this.userRepository.save(createdUser);
     return saveUser;
-  }
-
-  async findAll() {
-    return this.userRepository.find();
   }
 }

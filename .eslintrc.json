@@ -22,14 +22,14 @@
         "class-methods-use-this": [
             "off"
         ],
-        // "@typescript-eslint/explicit-function-return-type": [
-        //     "error",
-        //     {
-        //         "allowExpressions": false,
-        //         "allowDirectConstAssertionInArrowFunctions": true,
-        //         "allowConciseArrowFunctionExpressionsStartingWithVoid": true
-        //     }
-        // ],
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                "allowExpressions": false,
+                "allowDirectConstAssertionInArrowFunctions": true,
+                "allowConciseArrowFunctionExpressionsStartingWithVoid": true
+            }
+        ],
         "max-classes-per-file": "off",
         "operator-linebreak": "off",
         "implicit-arrow-linebreak": "off",
